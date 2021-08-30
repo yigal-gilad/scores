@@ -1,0 +1,80 @@
+<h3>Users management</h3>
+<div class="input-group mb-3">
+    <input type="text" [(ngModel)]="search" class="form-control" placeholder="Search any user by e-mail">
+    <div class="input-group-append">
+        <button class="btn btn-dark" [disabled]="!search" (click)="searchUser('email')" type="button"><i
+                class="fas fa-search"></i></button>
+        
+    </div>
+</div>
+
+<div *ngIf="!state.state.user_search_res.length">
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<div *ngIf="state.state.user_search_res.length">
+
+    <h3>users faund: {{ state.state.user_search_res.length }}</h3>
+    <div *ngFor="let x of state.state.user_search_res; let i = index">
+        <div class="card">
+            <div class="card-body">
+                <div class="media">
+
+                    <img *ngIf="x.profileImg !== 'none'" [src]="x.profileImg" class="rounded align-self-start mr-3"
+                        style="width:60px">
+
+                    <div class="media-body">
+                        <div class="dropdown">
+                            <button type="button" *ngIf="state.state.current_user.role !== x.role && x.role !== 'admin'"
+                                class="btn btn-dark dropdown-toggle float-right" data-toggle="dropdown">
+                                <i class="fas fa-bars"></i>
+                            </button>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="admin.action(x._id, 'ban')"><i class="fas fa-ban"></i>
+                                    Ban
+                                    user</a>
+                                <a class="dropdown-item" (click)="admin.action(x._id, 'unban')">
+                                    <i class="fas fa-user-check"></i>
+                                    Unban user</a>
+
+                                <a class="dropdown-item" (click)="admin.action(x._id, 'premote')"><i
+                                        class="fas fa-user-edit"></i>
+                                    Premote user</a>
+                                <a class="dropdown-item" (click)="admin.action(x._id, 'demote')"><i
+                                        class="fas fa-user-edit"></i>
+                                    Demote user</a>
+                                <a class="dropdown-item" (click)="admin.action(x._id, 'payback')">
+                                    <i class="fas fa-coins"></i>
+                                    Mark as payed</a>
+                                <a class="dropdown-item" (click)="admin.removeUser(x._id, i)"><i
+                                        class="fas fa-user-slash"></i>
+                                    Delete user</a>
+                            </div>
+                        </div>
+                        <h5><i class="fab fa-google" style="color:rgb(255, 86, 86);"
+                                *ngIf="x.provider === 'google'"></i>
+                            <i class="fab fa-facebook" style="color: rgb(0, 119, 255);"
+                                *ngIf="x.provider === 'facebook'"></i>
+                            {{x.name}}
+                        </h5>
+                        <p *ngIf="x.date">joined at: {{ x.date }}</p>
+                        <p>id: {{ x._id }}</p>
+                        <p>email: {{ x.email }}</p>
+                        <p>role: {{ x.role }}</p>
+                        <p *ngIf="x.mouneyBack" style="color: red;">
+                            <i class="fas fa-coins"></i>&nbsp;{{x.mouneyBack}}$
+                        </p>
+                        <p *ngIf="x.isbanned" style="color: red;">
+                            <i class="far fa-check-circle"></i> banned
+                        </p>
+                        <p *ngIf="!x.isbanned" style="color: green;">
+                            <i class="far fa-times-circle"></i> not banned
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+</div>

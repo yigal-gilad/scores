@@ -1,0 +1,183 @@
+<h3>Add new product</h3>
+
+<div class="form-group">
+    <label>Title:</label>
+    <input type="text" [(ngModel)]="productForm.title" class="form-control" placeholder="Enter new product title">
+</div>
+<div class="form-group">
+    <label>Description:</label>
+    <textarea class="form-control" [(ngModel)]="productForm.description" rows="5"
+        placeholder="Enter new product description"></textarea>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">Main image</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="file" accept="image/*" (change)="onSelectFile1($event)" class="form-control"
+                        placeholder="Choose new tournament image">
+                </div>
+                <img *ngIf="productForm.mainImage" class="img-fluid" [src]="productForm.mainImage">
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">Image 1</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="file" accept="image/*" (change)="onSelectFile2($event)" class="form-control"
+                        placeholder="Choose new tournament image">
+                </div>
+                <img *ngIf="productForm.images[0]" class="img-fluid" [src]="productForm.images[0]">
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">Image 2</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="file" accept="image/*" (change)="onSelectFile3($event)" class="form-control">
+                </div>
+                <img *ngIf="productForm.images[1]" class="img-fluid" [src]="productForm.images[1]">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Price (in {{ state.state.site_settings.payment_currency }}) for 1 unit:</label>
+            <input type="number" [(ngModel)]="productForm.price" class="form-control" min="0">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Old price (in {{ state.state.site_settings.payment_currency }}) for 1 unit (display Discount: {{
+                clcDiscount() }}%):</label>
+            <input type="number" [(ngModel)]="productForm.oldPrice" class="form-control">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Price (in {{ state.state.site_settings.payment_currency }}) of shipping:</label>
+            <input type="number" [(ngModel)]="productForm.shippingPrice" class="form-control" min="0">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Shipping time (business days):</label>
+            <input type="number" [(ngModel)]="productForm.shippingTime" class="form-control" min="0">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Shipping from:</label>
+            <input type="text" [(ngModel)]="productForm.shippingFrom" class="form-control"
+                placeholder="Enter current product location">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>How many units of this product you have:</label>
+            <input type="number" [(ngModel)]="productForm.stock" class="form-control" min="0">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Keywords (makes the product easier to find):</label>
+            <input type="text" class="form-control" [(ngModel)]="productForm.keywords"
+                placeholder="Enter new product Keywords">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="sel1">New product condition:</label>
+            <select [(ngModel)]="productForm.condition" class="form-control" id="sel1">
+                <option value="new">new</option>
+                <option value="used">used</option>
+                <option value="not specified">not specified</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Shipping only to: &nbsp;
+        <span class="badge badge-dark" data-toggle="modal" data-target="#myModal2" (click)="getCountries()">Add
+            countries</span>
+    </label>
+    <div class="card">
+        <div class="card-body">
+            <div *ngIf="!productForm.shippingLimit.length">
+                <h6>Worldwide.</h6>
+                <p>Tap "add countries" to set where you can ship new product</p>
+            </div>
+            <div *ngIf="productForm.shippingLimit.length">
+                <span *ngFor="let x of productForm.shippingLimit; let i = index">
+                    <span class="badge badge-pill badge-dark">{{ x.name }}
+                        <i class="fas fa-times-circle" (click)="removeCountries(i)"></i></span>&nbsp;
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-dark" (click)="admin.saveNewProduct(productForm)" [disabled]="
+!productForm.title ||
+!productForm.description ||
+!productForm.mainImage ||
+!productForm.images[0] ||
+!productForm.images[1] ||
+productForm.price <= 0||
+productForm.oldPrice < 0 ||
+productForm.shippingPrice <= 0 ||
+productForm.shippingTime < 0 ||
+!productForm.shippingLimit ||
+!productForm.shippingFrom ||
+!productForm.keywords ||
+productForm.stock <= 0">
+    Publish new product</button>
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add countries</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="isLoadingCountries"
+                    style="min-height: 100vh;">
+                    <br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br>
+                    <div class="spinner-border"></div>
+                    <br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br>
+                </div>
+                <div *ngIf="!isLoadingCountries && state.state.site_settings.countries.length">
+
+                    <p *ngFor="let x of state.state.site_settings.countries; let i = index" (click)="addCountries(i)"
+                        data-dismiss="modal">
+                        <img style="height: 2em;"
+                            src="https://www.countryflags.io/{{x.code.toLowerCase()}}/flat/64.png">
+                        {{ x.name }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,91 @@
+<h3>
+    <button type="button" class="btn btn-dark" [routerLink]="'/home'" skipLocationChange>&laquo;
+        Go back</button>&nbsp;
+    <span *ngIf="state.state.is_logged">
+        <div class="dropdown" style="display: inline;" *ngIf="state.state.current_user.role !== 'user' &&
+     !state.state.current_user.isbanned">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" [routerLink]="'/edit'" skipLocationChange><i class="fas fa-edit"></i>
+                    Edit product</a>
+                <a class="dropdown-item" (click)="actions.deleteProduct()">
+                    <i class="fas fa-trash"></i>
+                    Delete product</a>
+            </div>
+        </div>
+    </span>
+</h3>
+<br>
+
+<h3>{{ state.state.selected_product.title }}</h3>
+<div class="row">
+    <div class="col-6">
+        <div (click)="select(true)" data-toggle="modal" data-target="#myModal2">
+            <img class="img-fluid" [src]="mainImage">
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-6" *ngFor="let x of images; let i = index" (click)="select(false, i)" data-toggle="modal"
+                data-target="#myModal2">
+                <img class="img-fluid" [src]="x">
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <p *ngIf="state.state.selected_product.condition !== 'not specified'">Condition:&nbsp;<span
+                class="badge badge-dark">{{ state.state.selected_product.condition }}</span></p>
+        <div *ngIf="state.state.selected_product.oldPrice && state.state.selected_product.discountPresent">
+            <h6>
+                <span style="text-decoration: line-through; color: red">
+                    {{ state.state.selected_product.paymentCurrency }} {{
+                    state.state.selected_product.oldPrice }}</span>&nbsp;
+                <span class="badge badge-success">- {{ state.state.selected_product.discountPresent }}% off!</span>
+            </h6>
+        </div>
+        <h4>Price: {{ state.state.site_settings.payment_currency }} {{ state.state.selected_product.price }}</h4>
+        <p><i class="fas fa-shipping-fast"></i>&nbsp;{{ state.state.site_settings.payment_currency }} {{
+            state.state.selected_product.shippingPrice }},
+            from
+            {{ state.state.selected_product.shippingFrom }} in {{ state.state.selected_product.shippingTime }} business
+            day(s)
+        </p>
+        <p>{{ state.state.selected_product.stock }} units left</p>
+        <p>We are shipping this product only to&nbsp;
+            <span *ngIf="!state.state.selected_product.shippingLimit.length">Worldwide</span>
+            <span *ngIf="state.state.selected_product.shippingLimit.length">
+                <span *ngFor="let x of state.state.selected_product.shippingLimit; let i = index">
+                    {{ x.name }},&nbsp;
+                </span>
+            </span>
+        </p>
+        <div *ngIf="state.state.is_logged">
+            <div class="input-group mb-3" *ngIf="!state.state.current_user.isbanned && state.state.is_logged">
+                <input type="number" min="1" max="{{state.state.selected_product.stock}}" [(ngModel)]="q"
+                    class="form-control" placeholder="Add product to cart">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button" [disabled]="check() === false ||
+                     state.state.current_user.isbanned" (click)="addToCart()">
+                        <i class="fas fa-shopping-cart"></i>&nbsp;
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="state.state.is_logged">
+            <p style="color: red;" *ngIf="state.state.current_user.isbanned">Banned users cannot buy products</p>
+        </div>
+        <p style="font-weight: bold;" *ngIf="!state.state.is_logged">SIGN UP in order to buy this product</p>
+    </div>
+</div>
+<p>{{ state.state.selected_product.description }}</p>
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-lg">
+
+        <img [src]="selectedImage" class="img-fluid">
+
+    </div>
+</div>

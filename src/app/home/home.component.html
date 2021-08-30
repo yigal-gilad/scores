@@ -1,0 +1,51 @@
+<div class="w-100 d-flex justify-content-center align-items-center"
+    *ngIf="this.state.state.site_settings.is_loading_page" style="min-height: 100vh;">
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <div class="spinner-border"></div>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+</div>
+<div *ngIf="!this.state.state.site_settings.is_loading_page">
+  <div *ngIf="!state.state.products.length" class="w-100 d-flex justify-content-center align-items-center">
+      <br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br>
+      <h5>No products to show yet...</h5>
+      <br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br>
+
+  </div>
+<div *ngIf="!this.state.state.site_settings.is_loading_page">
+    <div style="min-height: 100vh;">
+        <div class="row">
+            <div class="col-md-6" *ngFor="let x of state.state.products; let i = index">
+                <div class="card" (click)="select(i)">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <img [defaultImage]="state.state.urls.main + '/placeholder.png'"
+                                    [lazyLoad]="x.mainImage" class="img-fluid">
+                            </div>
+                            <div class="col-8">
+                                <h6>{{ x.title }}</h6>
+                                <div *ngIf="x.oldPrice && x.discountPresent">
+                                    <h6>
+                                        <span style="text-decoration: line-through; color: red">{{
+                                            state.state.site_settings.payment_currency }}
+                                            {{
+                                            x.oldPrice }}</span>&nbsp;
+                                        <span class="badge badge-success">- {{ x.discountPresent }}% off!</span>
+                                    </h6>
+                                </div>
+                                <h5>{{ state.state.site_settings.payment_currency }} {{ x.price }}</h5>
+                                <p *ngIf="x.condition !== 'not specified'">Condition:&nbsp;<span
+                                        class="badge badge-dark">{{ x.condition }}</span></p>
+                                <p>{{ x.stock }} left</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
