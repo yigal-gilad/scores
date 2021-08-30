@@ -1,6 +1,18 @@
-# ECommerce
+# Drinks search engine
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
+
+## Some info
+
+This web application is a simple search interface to exteact data from https://www.thecocktaildb.com.
+
+## Technologies used
+
+Angular, NodeJs, Express, Bootstrap.
+
+## Link for this application
+
+https://e-commerce-demo-israel.herokuapp.com/
 
 ## Development server
 
