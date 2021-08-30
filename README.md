@@ -1,10 +1,10 @@
-# Drinks search engine
+# e-commerce demo israel
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
 ## Some info
 
-This web application is a simple search interface to exteact data from https://www.thecocktaildb.com.
+a simple M.E.A.N stack e-commerce web application, which allows registerd users to make "purchases" and get a success message.
 
 ## Technologies used
 
