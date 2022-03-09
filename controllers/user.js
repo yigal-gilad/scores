@@ -3,20 +3,16 @@ const mongoose = require('mongoose');
 
 
 exports.createUser = (req, res) => {
-    user.findOne({ name: req.body.username })
-        .then((doc) => {
-            if (doc) return res.status(403).send("user with this name already exists");
-            const deviceId = new mongoose.Types.ObjectId();
-            const userobj = {
-                name: req.body.username,
-                score: 0,
-                device_id: deviceId
-            };
-            user.create(userobj, function (err, createdDoc) {
-                if (err) return res.status(500).send(err);
-                return res.status(200).send(createdDoc);
-            });
-        })
+    const deviceId = new mongoose.Types.ObjectId();
+    const userobj = {
+        name: req.body.username,
+        score: 0,
+        device_id: deviceId
+    };
+    user.create(userobj, function (err, createdDoc) {
+        if (err) return res.status(500).send(err.code === 11000 ? "user with that name already esists: " + err.errmsg : err);
+        return res.status(200).send(createdDoc);
+    });
 };
 
 exports.getUser = (req, res) => {
