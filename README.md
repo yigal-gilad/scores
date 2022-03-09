@@ -8,7 +8,6 @@ https://users-and-scores.herokuapp.com
 - Update users usernames
 - Update users score
 - Update users device id
-- 
 ## Tech used
 - Node.js
 - Express
