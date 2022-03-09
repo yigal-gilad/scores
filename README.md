@@ -43,7 +43,7 @@ body:
 GET /getuser
 ```
 #### Request
-parameters:
+query params:
 | Key | Type | Reqiered | Description |
 | ------ | ------ | ------ | ------ |
 | username | string | true | current name of new user |
