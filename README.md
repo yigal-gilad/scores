@@ -1,39 +1,84 @@
-# e-commerce demo israel
+# Users and scores api
+## Main url
+Send requests to this url:
+https://users-and-scores.herokuapp.com
+## Features
+- Create new users
+- Get specific user
+- Update users usernames
+- Update users score
+- Update users device id
+- 
+## Tech used
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- Joi and Celebrate for request valdations
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
-
-## Some info
-
-a simple M.E.A.N stack e-commerce web application, which allows registerd users to make "purchases" and get a success message.
-
-## Technologies used
-
-Angular, NodeJs, Express, Bootstrap.
-
-## Link for this application
-
-https://e-commerce-demo-israel.herokuapp.com/
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Endpints
+#### Create new user
+---
+```http
+POST /createuser
+```
+#### Request
+body:
+| Key | Type | Reqiered | Description |
+| ------ | ------ | ------ | ------ |
+| username | string | true | name for the new user |
+### Response
+```javascript
+{
+    "_id": "62288da600ecc9137860551e",
+    "name": "john doe",
+    "score": 0,
+    "device_id": "62288da600ecc9137860551d",
+    "__v": 0
+}
+```
+#### Get user
+---
+```http
+GET /getuser?username=user&device_id=device_id
+```
+#### Request
+parameters:
+| Key | Type | Reqiered | Description |
+| ------ | ------ | ------ | ------ |
+| username | string | true | current name of new user |
+| device_id | string | true | current name of new user |
+### Response
+```javascript
+{
+    "_id": "62288da600ecc9137860551e",
+    "name": "john doe",
+    "score": 0,
+    "device_id": "62288da600ecc9137860551d",
+    "__v": 0
+}
+```
+#### Update user
+---
+```http
+POST /updateuser
+```
+#### Request
+body:
+| Key | Type | Reqiered | Description |
+| ------ | ------ | ------ | ------ |
+| username | string | true | current name of the user |
+| device_id | string | true | current user device id |
+| newusername | string | flase | new name for the user to update |
+| newscore | number | false | new score for the user to update |
+| new_device_id | string | false | new device id for the user to update |
+### Response
+```javascript
+{
+    "_id": "62288da600ecc9137860551e",
+    "name": "john doe",
+    "score": 0,
+    "device_id": "62288da600ecc9137860551d",
+    "__v": 0
+}
+```
