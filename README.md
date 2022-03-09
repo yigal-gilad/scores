@@ -40,7 +40,7 @@ body:
 #### Get user
 ---
 ```http
-GET /getuser?username=user&device_id=device_id
+GET /getuser
 ```
 #### Request
 parameters:
