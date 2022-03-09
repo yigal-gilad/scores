@@ -16,7 +16,7 @@ https://users-and-scores.herokuapp.com
 - Joi and Celebrate for request valdations
 
 ## Endpints
-#### Create new user
+### Create new user
 ---
 ```http
 POST /createuser
@@ -26,7 +26,7 @@ body:
 | Key | Type | Reqiered | Description |
 | ------ | ------ | ------ | ------ |
 | username | string | true | name for the new user |
-### Response
+#### Response
 ```javascript
 {
     "_id": "62288da600ecc9137860551e",
@@ -36,7 +36,7 @@ body:
     "__v": 0
 }
 ```
-#### Get user
+### Get user
 ---
 ```http
 GET /getuser
@@ -47,7 +47,7 @@ query params:
 | ------ | ------ | ------ | ------ |
 | username | string | true | current name of new user |
 | device_id | string | true | current name of new user |
-### Response
+#### Response
 ```javascript
 {
     "_id": "62288da600ecc9137860551e",
@@ -57,7 +57,7 @@ query params:
     "__v": 0
 }
 ```
-#### Update user
+### Update user
 ---
 ```http
 POST /updateuser
@@ -71,7 +71,7 @@ body:
 | newusername | string | flase | new name for the user to update |
 | newscore | number | false | new score for the user to update |
 | new_device_id | string | false | new device id for the user to update |
-### Response
+#### Response
 ```javascript
 {
     "_id": "62288da600ecc9137860551e",
