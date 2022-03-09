@@ -45,8 +45,8 @@ GET /getuser
 query params:
 | Key | Type | Reqiered | Description |
 | ------ | ------ | ------ | ------ |
-| username | string | true | current name of new user |
-| device_id | string | true | current name of new user |
+| username | string | true | current name of the user |
+| device_id | string | true | current device id of the user |
 #### Response
 ```javascript
 {
